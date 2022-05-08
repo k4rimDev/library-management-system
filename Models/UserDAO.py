@@ -3,7 +3,6 @@ class UserDAO():
 		self.db = DAO
 		self.db.table = "users"
 
-
 	def list(self):
 		users = self.db.query("select @table.id,@table.name,@table.email,@table.bio,@table.mob,@table.lock,@table.created_at,count(reserve.book_id) as books_owned from @table LEFT JOIN reserve ON reserve.user_id=@table.id GROUP BY reserve.user_id").fetchall()
 
@@ -51,3 +50,19 @@ class UserDAO():
 		self.db.commit()
 		
 		return q
+
+	def delete(self, id):
+		q = self.db.query("DELETE from @table where id='{}'".format(id))
+		self.db.commit()
+		user = q.fetchone()
+
+		return user
+
+
+	def be_admin(self, id):
+		user_email = self.db.query("SELECT email FROM @table where id = '{}'".format(id)).fetchone()
+		user_password = self.db.query("SELECT password FROM @table where id = '{}'".format(id)).fetchone()
+
+		q = self.db.query("INSERT INTO admin (email, password) VALUES('{}', '{}')".format(user_email['email'], user_password['password']))
+		self.db.commit()		
+		# return q

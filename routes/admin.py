@@ -34,7 +34,7 @@ def signin():
 		if len(email)<1 or len(password)<1:
 			return render_template('admin/signin.html', error="Email and password are required")
 
-		d = admin_manager.signin(email, hash(password))
+		d = admin_manager.signin(email, (password))
 
 		if d and len(d)>0:
 			session['admin'] = int(d["id"])
@@ -66,7 +66,44 @@ def users_view():
 	return render_template('users.html', g=g, admin=admin, users=myusers)
 
 
+@admin_view.route('/users/delete/<int:id>', methods=['POST'])
+@admin_manager.admin.login_required
+def users_delete(id):
+	admin_manager.admin.set_session(session, g)
 
+	id = int(id)
+
+	if id is not None:
+		user_manager.delete(id)
+	admin = admin_manager.get(id)
+	myusers = admin_manager.getUsersList()
+
+	return render_template('users.html', g=g, admin=admin, users=myusers)
+
+
+
+
+@admin_view.route('/users/be_admin/<int:id>', methods=['POST'])
+@admin_manager.admin.login_required
+def users_admin(id):
+	admin_manager.admin.set_session(session, g)
+
+	id = int(id)
+
+	if id is not None:
+		user_manager.be_admin(id)
+	admin = admin_manager.get(id)
+	myusers = admin_manager.getUsersList()
+
+	return render_template('users.html', g=g, admin=admin, users=myusers)
+
+
+
+
+
+
+
+# Books actions
 @admin_view.route('/books/', methods=['GET'])
 @admin_manager.admin.login_required
 def books():
@@ -100,6 +137,29 @@ def view_book(id):
 @admin_manager.admin.login_required
 def book_add():
 	admin_manager.admin.set_session(session, g)
+
+	# _form = request.form
+	# title = str(_form['title'])
+	# qty = str(_form['qty'])
+	# available = str(_form['avaliable'])
+	# description = str(_form['desc'])
+
+
+	# print(title, qty, available, description)
+
+
+	if request.method == 'POST':
+		_form = request.form
+		title = str(_form['title'])
+		qty = str(_form['qty'])
+		available = str(_form['avaliable'])
+		description = str(_form['desc'])
+
+		print(title, qty, available, description)
+
+		book_manager.add(title, qty, '1', 'Admin', available, description)
+		
+		return render_template('books/books.html', g=g)
 	
 	return render_template('books/add.html', g=g)
 
@@ -114,8 +174,10 @@ def book_edit(id):
 
 		if b and len(b) <1:
 			return render_template('edit.html', error="No book found!")
-
-		return render_template("books/edit.html", book=b, g=g)
+		else:
+			if request.method == 'POST':
+				pass
+			return render_template("books/edit.html", book=b, g=g)
 	
 	return redirect('/books')
 

@@ -3,6 +3,11 @@ class BookDAO():
 		self.db = DAO
 		self.db.table = "books"
 
+	def add (self, title, count, edition, author, availability, description):
+		q = self.db.query("INSERT INTO book (name, desc, author, availability, edition, count) VALUES('{}', '{}', '{}', '{}', '{}', '{}');".format(title, description, author, availability, edition, count))
+		self.db.commit()
+		return q
+
 	def delete(self, id):
 		q = self.db.query("DELETE FROM @table where id={}".format(id))
 		self.db.commit()

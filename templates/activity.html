@@ -1,0 +1,201 @@
+{%extends "/shared/layout.html" %}
+
+{% block title %}Activity - {{user['name']}} {% endblock %}
+
+{% block content %}
+	<div class="profile container">
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<div class="alert alert-success">
+					{% for message in messages %}
+						<span>{{ message }}</span>
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endwith %}
+		<div class="">
+
+            <div class="card-body">
+                <div class="row d-flex justify-content-between">
+                    <div class="left-activity p-2 border card rounded w-25">
+						<button type="button" class="create-document btn btn-outline-danger rounded-pill mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">
+							<i class="fa-solid fa-plus"></i>
+							Write an e-document
+						</button>
+						
+						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog modal-dialog-centered">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">New document</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							  </div>
+							  <div class="modal-body">
+								<form method="POST">
+								  <div class="mb-3">
+									<label for="desctiption" class="col-form-label">To whom:</label>
+									<input type="text" class="form-control" id="recipient-name">
+								  </div>
+
+								  <div class="mb-3">
+									<label for="recipient-name" class="col-form-label">Description:</label>
+									<input type="text" class="form-control" id="desctiption">
+								  </div>
+
+								  <div class="mb-3">
+									<label for="message-text" class="col-form-label">Document:</label>
+									<textarea class="form-control" id="message-text"></textarea>
+								  </div>
+
+								  <div class="mb-3">
+									<label for="formFileSm" class="form-label">File attachment</label>
+									<input class="form-control form-control-sm" id="formFileSm" type="file">
+								  </div>
+								</form>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Send document</button>
+							  </div>
+							</div>
+						  </div>
+						</div>
+	
+						<ul class="nav nav-tabs flex-column border-0" id="myTab" role="tablist">
+							<li class="nav-item border-0">
+							  <a class="nav-link active" id="inbox-tab" data-toggle="tab" href="#inbox" role="tab" aria-controls="inbox" aria-selected="true">Inbox</a>
+							</li>
+							<li class="nav-item border-0">
+								<a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">Sent</a>
+							</li>
+							<li class="nav-item border-0">
+								<a class="nav-link" id="archive-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="archive" aria-selected="false">Archive</a>
+							</li>
+						</ul>
+					</div>
+                    <div class="card col-md-9 mwrapper">
+
+						  <div class="col-md-12 ">
+							<div class="tab-content" id="myTabContent">
+								<div class="tab-pane fade show active" id="inbox" role="tabpanel" aria-labelledby="inbox-tab">
+								<div class="">
+									{% if books %}
+										<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+										<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+											font-size: 6em; "></i></div>
+										{% for book in books %}
+											<div class="card book">
+												<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+												<div class="card-body">
+				    								<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
+													{% if book['availability'] < 1 %}
+														<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
+													{% endif %}
+													<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
+
+													<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
+												</div>
+											</div>
+										{% endfor %}
+										{% else %}
+											<div class="card bwrapper">
+												<div class="card-body">
+													<h4 class="text-center mt-4">Manage Books</h4>
+													<div class="text-center mb-4" style="margin-top: 21px !important;">
+														<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+														<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+														<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+														</svg>
+													</div>
+													<p class="text-center mb-4">No Books You Reserved!</p>
+												</div>
+											</div>
+										{% endif %}	
+										</div>
+								</div>
+								
+								<div class="tab-pane fade show" id="sent" role="tabpanel" aria-labelledby="sent-tab">
+									<div class="">
+										{% if books %}
+											<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+											<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+												font-size: 6em; "></i></div>
+											{% for book in books %}
+												<div class="card book">
+													<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+													<div class="card-body">
+														<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
+														{% if book['availability'] < 1 %}
+															<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
+														{% endif %}
+														<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
+	
+														<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
+													</div>
+												</div>
+											{% endfor %}
+											{% else %}
+												<div class="card bwrapper">
+													<div class="card-body">
+														<h4 class="text-center mt-4">Manage Books</h4>
+														<div class="text-center mb-4" style="margin-top: 21px !important;">
+															<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+															<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+															<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+															</svg>
+														</div>
+														<p class="text-center mb-4">No Books You Reserved!</p>
+													</div>
+												</div>
+											{% endif %}	
+											</div>
+									</div>
+
+
+
+									<div class="tab-pane fade show" id="archive" role="tabpanel" aria-labelledby="archive-tab">
+										<div class="">
+											{% if books %}
+												<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+												<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+													font-size: 6em; "></i></div>
+												{% for book in books %}
+													<div class="card book">
+														<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+														<div class="card-body">
+															<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
+															{% if book['availability'] < 1 %}
+																<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
+															{% endif %}
+															<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
+		
+															<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
+														</div>
+													</div>
+												{% endfor %}
+												{% else %}
+													<div class="card bwrapper">
+														<div class="card-body">
+															<h4 class="text-center mt-4">Manage Books</h4>
+															<div class="text-center mb-4" style="margin-top: 21px !important;">
+																<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+																<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+																<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+																</svg>
+															</div>
+															<p class="text-center mb-4">No Books You Reserved!</p>
+														</div>
+													</div>
+												{% endif %}	
+												</div>
+										</div>
+							</div>
+						  </div>
+
+                    </div>
+
+                </div>
+            </form>
+        </div>
+	</div>
+{% endblock %}

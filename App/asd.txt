@@ -1,0 +1,138 @@
+<div class="login-content">
+			<form method="POST" style="margin-top: 100px;" class="login-form">
+				<img src="{{ url_for('static', filename='img/avatar.svg') }}">
+				<h2 class="title">Welcome</h2>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Email</h5>
+           		   		<input
+                            type="email" 
+                            class="input" 
+                            name="email" 
+                            id="email" 
+                        >
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Password</h5>
+           		    	<input
+                           type="password" 
+                           class="input" 
+                           name="password1" 
+                           id="password1"
+                        >
+            	   </div>
+            	</div>
+            	<a href="#">Forgot Password?</a>
+            	<input type="submit" class="login-btn" value="Login">
+            </form>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------Profile html
+
+
+<div class="tab-pane fade show active" id="send" role="tabpanel" aria-labelledby="send-tab">
+									<div class="">
+										{% if books %}
+											<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+											<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+												font-size: 6em; "></i></div>
+											{% for book in books %}
+												<div class="card book">
+													<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+													<div class="card-body">
+														<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
+														{% if book['availability'] < 1 %}
+															<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
+														{% endif %}
+														<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
+	
+														<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
+													</div>
+												</div>
+											{% endfor %}
+											{% else %}
+												<div class="card bwrapper">
+													<div class="card-body">
+														<h4 class="text-center mt-4">Manage Books</h4>
+														<div class="text-center mb-4" style="margin-top: 21px !important;">
+															<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+															<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+															<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+															</svg>
+														</div>
+														<p class="text-center mb-4">No Books You Reserved!</p>
+													</div>
+												</div>
+											{% endif %}	
+											</div>
+									</div>
+
+
+
+
+									<div class="tab-pane fade show active" id="archive" role="tabpanel" aria-labelledby="archive-tab">
+										<div class="">
+											{% if books %}
+												<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+												<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+													font-size: 6em; "></i></div>
+												{% for book in books %}
+													<div class="card book">
+														<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+														<div class="card-body">
+															<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
+															{% if book['availability'] < 1 %}
+																<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
+															{% endif %}
+															<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
+		
+															<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
+														</div>
+													</div>
+												{% endfor %}
+												{% else %}
+													<div class="card bwrapper">
+														<div class="card-body">
+															<h4 class="text-center mt-4">Manage Books</h4>
+															<div class="text-center mb-4" style="margin-top: 21px !important;">
+																<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+																<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+																<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+																</svg>
+															</div>
+															<p class="text-center mb-4">No Books You Reserved!</p>
+														</div>
+													</div>
+												{% endif %}	
+												</div>
+										</div>

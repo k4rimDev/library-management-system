@@ -6,8 +6,8 @@ class DB(object):
 	"""Initialize mysql database """
 	host = "localhost"
 	user = "root"
-	password = ""
-	db = "lms"
+	password = "kerim208"
+	db = "Edoc"
 	table = ""
 
 	def __init__(self, app):

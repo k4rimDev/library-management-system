@@ -12,7 +12,7 @@
 			  <div class="form-group">
 			    <div style="width: 100%">
 			    <div style="width: 90%; display: inline-block;">
-			    <input type="search" name="keyword" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{keyword}}" placeholder="Search for books...">
+			    <input type="search" name="keyword" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{keyword}}" placeholder="Search for documents...">
 			    </div>
 				<button type="submit" style="margin-left: 5px;" class="btn btn-primary">Search</button>
 			    </div>
@@ -20,12 +20,14 @@
 			</form>
 		</div>
 
-		<div>
-			<h2>Manage Books</h2>
+
+		<h2>Manage documents</h2>
+
+		<div class="d-flex">
 			{% if books %}
 				{% for book in books %}
-				<div class="card book">
-				  <img src="/static/images/bg.jpg" class="card-img-top" alt="{{book[1]}}">
+				<div class="card book d-flex align-items-center">
+				  <img src="/static/images/document.png" style="width: 250px; height: 300px;" class="card-img-top" alt="{{book[1]}}">
 				  <div class="card-body">
 				    <h5 class="card-title"><a href="{{book['id']}}">{{book['name']}}</a></h5>
 				    {% if book["availability"] < 1 %}

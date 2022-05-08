@@ -60,3 +60,9 @@ class UserManager():
 
 	def getUsersByBook(self, book_id):
 		return self.dao.getUsersByBook(book_id)
+
+	def delete(self, id):
+		self.dao.delete(id)
+
+	def be_admin(self, id):
+		self.dao.be_admin(id)

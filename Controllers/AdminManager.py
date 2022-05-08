@@ -34,3 +34,8 @@ class AdminManager():
 
 	def user_list(self):
 		return self.user.list()
+
+	# def delete_user(self, id):
+	# 	user = self.user.delete(id)
+
+	# 	return user

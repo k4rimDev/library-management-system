@@ -4,17 +4,33 @@
 <head>
 	{%block head %}
 	<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Fontawesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="/static/bootstrap.min.css" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-	
-    <link rel="stylesheet" href="/static/style.css" />
-	
+		
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	<!-- bootstrap son -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+	<link rel="stylesheet" href="/static/style.css" />
+
+	<style>
+		.left-activity .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+			background-color: #fff;
+			border-color: #dee2e6;
+		}
+	</style>
+
     {% endblock %}
 </head>
 <!-- Put some text on the page -->
@@ -26,9 +42,12 @@
 			    <a class="nav-link active" href="/">Home</a>
 			  </li>
 			  <li class="nav-item">
-			    <a class="nav-link" href="/books">Books</a>
+			    <a class="nav-link" href="/books">Documents</a>
 			  </li>
 			  {% if g and g.user %}
+				<li class="nav-item">
+					<a class="nav-link" href="/activity/">Activity</a>
+				</li>
 				  <li class="nav-item">
 				    <a class="nav-link" href="/user/">Profile</a>
 				  </li>
@@ -48,5 +67,7 @@
 
 		{%block content %}{% endblock %}
 	</div>
+
+	<script src="/static/app.js"></script>
 </body>
 </html>
