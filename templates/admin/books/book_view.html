@@ -1,6 +1,6 @@
 {%extends "/shared/admin_layout.html" %}
 
-{% block title %}Book - {{books['name']}} {% endblock %}
+{% block title %}Document - {{books['name']}} {% endblock %}
 
 {% block content %}
 <div class="container">
@@ -12,7 +12,7 @@
           <div class="form-group">
             <div style="width: 100%">
             <div style="width: 90%; display: inline-block;">
-            <input type="search" name="keyword" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{keyword}}" placeholder="Search for books...">
+            <input type="search" name="keyword" autofocus class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{keyword}}" placeholder="Search for documents...">
             </div>
             <button type="submit" style="margin-left: 5px;" class="btn btn-primary">Search</button>
             </div>
@@ -23,25 +23,25 @@
     {% if books %}
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card  book" style="width:100%">
+                    <div class="card book" style="width:100%">
                         <div class="card-body">
                             <div class="row">
                             <div class="col-md-5">
-                                <img src="/static/images/bg.jpg" style="height: 250px; width: auto; 
-                                margin: 0 auto;
+                                <img src="/static/images/document.png" style="height: 250px; width: auto; 
+                                margin: 5px;
                                 display: block;" class="card-img-top" alt="{{books[1]}}">
 								<a href="edit/{{books['id']}}" class="btn ml-3 mt-3 btn-outline-primary"><i class="bi bi-pen-fill"></i> Edit</a>
 								<a href="delete/{{books['id']}}" class="btn ml-3 mt-3 btn-outline-danger"><i class="bi bi-trash"></i> Delete</a>
 
-                                <div class="platforms mt-3 ml-3">
+                                <!-- <div class="platforms mt-3 ml-3">
                                     <h4 class="font-weight-light" style="margin-bottom: 0;">Avaliable On:</h4>
                                     <div style="font-size: 2.1em;">
                                         <i class="bi bi-xbox" style="color: green;"></i>
                                         <i class="bi bi-youtube ml-2" style="color: red;"></i>
                                         <i class="bi bi-windows ml-2" style="color: rgb(39, 144, 185);"></i>
-                                        <i class="bi bi-github ml-2" style=""></i>
+                                        <i class="bi bi-github ml-2"></i>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-md-6">
                                 <h2>{{books['name']}}</h2>
@@ -54,7 +54,7 @@
                                 <p class="card-text">
                                 <span class="badge badge-{{ 'primary' if books['count'] > 0 else 'secondary' }}" style="margin-bottom: 5px;">
                                     {% if books['count'] > 0%}
-                                        Books Left: {{books['count']}}
+                                        Document Left: {{books['count']}}
                                     {% else %}
                                         All gone
                                     {% endif %}
@@ -63,7 +63,7 @@
 
 								{% if books_owners %}
 								<hr class="mt-5 mb-4">
-									<h4 class="font-weight-light">Book Owner(s)</h4>
+									<h4 class="font-weight-light">Document Owner(s)</h4>
 									<div class="row">
 									{% for user in books_owners %}
 										<div class="owner col-md-3" style="padding-left: 0;">
@@ -73,6 +73,9 @@
 									{% endfor %}
 								</div>
 								{% endif %}
+
+                            <a href="../../{{file_path}}" class="btn btn-outline-primary" download>Download document</a>
+
                             </div>
                             </div>
                         </div>
@@ -86,7 +89,7 @@
                     <div class="text-center mb-4" style="
                     margin-top: 21px !important;"><i class="text-center mt-4 bi-book" style="
                         font-size: 6em; "></i></div>
-                    <p class="text-center mb-4">No Book Found!</p>
+                    <p class="text-center mb-4">No Document Found!</p>
                 </div>
             </div>
         {% endif %}	

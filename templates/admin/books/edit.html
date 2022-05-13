@@ -18,7 +18,7 @@
 			<h2 style="display: inline-block;">Edit </h2> <h4 style="display: inline;"><b><i>"{{book['name']}}"</i></b></h4>
 			<div style="margin-top: 2em;" class="form-group">
 				<label for="title">Title</label>
-				<input type="text" name="title" class="form-control" value="{{book['name']}}" id="title" required  placeholder="Enter book title">
+				<input type="text" name="title" class="form-control" value="{{book['name']}}" id="title" required  placeholder="Enter document title">
 				<small class="form-text text-muted">Members will be able to search using title!</small>
 			</div>
 			<div class="form-group">
@@ -28,10 +28,10 @@
 			<div class="form-group form-check">
 				<input type="checkbox" name="avaliable" value="{{book['availability']}}" {{'checked' if book['availability']==1 else''}} class="form-check-input" id="avaliable">
 				<label class="form-check-label" for="avaliable">Avaliable</label>
-				<small class="form-text text-muted">Book will not be shown to members if unchecked!</small>
+				<small class="form-text text-muted">Document will not be shown to members if unchecked!</small>
 			</div>
 			
-			<div class="platforms mt-3 mb-3">
+			<!-- <div class="platforms mt-3 mb-3">
 				<label class="form-check-label" for="avaliable">Platforms</label>
 				<div style="font-size: 2.1em;">
 					<i class="bi bi-xbox" style="color: green;"></i>
@@ -39,7 +39,7 @@
 					<i class="bi bi-windows ml-2" style="color: rgb(39, 144, 185);"></i>
 					<i class="bi bi-github ml-2" style=""></i>
 				</div>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<label for="desc">Description</label>
 				<textarea id="desc" name="desc" class="form-control">{{book['desc']}}</textarea>

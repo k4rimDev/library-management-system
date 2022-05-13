@@ -6,10 +6,12 @@
 	{{ super() }}
 
     <link rel="stylesheet" href="/static/home.css" />
+    <link rel="stylesheet" href="/static/index.css" />
+
 {% endblock %}
 
 {% block content %}
-	<div class="container d-flex h-75">
+	<!-- <div class="container d-flex h-75">
 	    <div class="row justify-content-center align-self-center welcome">
 	    	<h3>WELCOME</h3>
 			<div style="width:100%">
@@ -23,5 +25,183 @@
 			</form>
 			</div>
 	    </div>
-	</div>
+	</div> -->
+
+	<div class="intro">
+        <div class="container">
+            <div class="intro-slider">
+                <div class="intro-slider__item">
+                    <div class="intro-slider__inner">
+                        <img src="https://edocsrecording.com/images/sample/erecording-made-easy.png" alt="" class="intro-slider__item-img">
+
+                        <div class="intro-slider__item-info">
+                            <h2 class="intro-slider__title">
+                                eRECORDING MADE EASY
+                            </h2>
+                            <p class="intro-slider__subtitle">
+                                For many, eRecording with e-Docs Solutions is the easiest, fastest, most secure and cost effective way to have real estate related documents recorded in public records.
+                            </p>
+                            <button class="btn btn-primary">
+                                Read More
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="intro-slider__item">
+                    <div class="intro-slider__inner">
+                        <img src="https://edocsrecording.com/images/sample/questions-answers-document-recording.png" alt="" class="intro-slider__item-img">
+
+                        <div class="intro-slider__item-info">
+                            <h2 class="intro-slider__title">
+                                HAVE ANY QUESTIONS?
+                            </h2>
+                            <p class="intro-slider__subtitle">
+                                e-Docs Solutions makes eRecording simple, fast and secure. Request a live demo webinar today and witness first hand how quick and easy eRecording is.                            </p>
+                            <button class="btn btn-primary">
+                                Webinar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="info">
+        <h2 class="info-title">
+            Types of electronic documents.
+        </h2>
+        <p class="info-subtitle">
+            Here are a few of the most common types of e-docs.
+        </p>
+
+        <ul class="info-list">
+            <li class="info__item">
+                <p>01.</p>
+                <p class="info__item-text">
+                    <span>Documents:</span> From contracts and proposals to user guides and manuscripts, you can convert any Microsoft Word doc or text file into a PDF that is easy to share, annotate, or sign.
+                </p>
+            </li>
+
+            <li class="info__item">
+                <p>02.</p>
+                <p class="info__item-text">
+                    <span>Presentations:</span> You can convert PowerPoint files and other slide presentations to send as a resource after you present them. These files can easily be viewed on any computer or mobile device, making the information even more accessible to your audience.
+                </p>
+            </li>
+
+            <li class="info__item">
+                <p>03.</p>
+                <p class="info__item-text">
+                    <span>Spreadsheets:</span> Numbers and data are best tracked in spreadsheets, and being able to convert and display that data in easy-to-read PDFs — that can fit any screen — makes it simpler to securely share dense information.
+                </p>
+            </li>
+
+            <li class="info__item">
+                <p>04.</p>
+                <p class="info__item-text">
+                    <span>Images:</span> By converting image files into PDFs, you can create a searchable, shareable database of easy-to-store images, photos, and more.
+                </p>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <div class="search">
+        <div class="container">
+            <div class="search-info">
+                <h2 class="search-title mb-3">
+                    Lazarus techical documentation
+                </h2>
+                <p class="search-subtitle mb-4">
+                    The home for Lazarus documentation and learning for developers and technology professionals.
+                </p>
+            </div>
+            <div class="search-result">
+                <form class="input-group mb-4" method="POST">
+                    <input type="search" class="form-control" placeholder="Search document ..." aria-label="Search document ..." aria-describedby="button-addon2" name="q">
+                    <button class="btn btn-primary" type="submit" id="searchBtn"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
+                </form>
+            
+                <ul class="search-results">
+                    <li class="search-results__item">
+                        <p class="search-results__item-name">
+                            {{ download_name }}
+                        </p>
+
+                        <a href="../{{ download_document }}" download>
+                            Download this document
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="doc">
+        <div class="doc__inner">
+            <div class="doc__info">
+                <h2 class="doc__title">
+                    eRecording for Document Submitters
+                </h2>
+
+                <p class="doc__subtitle">
+                    A document submitter is any company or firm that regularly sends documents to and from the county recorder's office for recording in public records. Examples include, but are not limited to title companies, attorneys, lenders, loan servicers.
+                </p>
+            </div>
+
+            <div class="doc__img">
+                <img src="https://edocsrecording.com/images/erecording-for-document-submitters.png" alt="">
+            </div>
+        </div>
+
+        <div class="doc__inner">
+            <div class="doc__img">
+                <img src="https://edocsrecording.com/images/erecording-for-document-recorders.png" alt="">
+            </div>
+
+            <div class="doc__info">
+                <h2 class="doc__title">
+                    eRecording for Document Recorders
+                </h2>
+
+                <p class="doc__subtitle">
+                    A document recorder is a government entity responsible for maintaining the accuracy and integrity public records for real property. In most places, it's known as the County Recorder or Register of Deeds.
+                </p>
+            </div>
+        </div>
+
+        <div class="doc__inner">
+            <div class="doc__info">
+                <h2 class="doc__title">
+                    eRecording for Vendor Affiliates
+                </h2>
+
+                <p class="doc__subtitle">
+                    A vendor affiliate is any company or firm whose customers would benefit from simple, fast and secure electronic document recording. Examples include, but are not limited to land record vendors and title software vendors.
+                </p>
+            </div>
+
+            <div class="doc__img">
+                <img src="https://edocsrecording.com/images/erecording-for-vendor-partners.png" alt="">
+            </div>
+        </div>
+    </div>
+
+	<script>
+		// Slick Slider
+		$(document).ready(function(){
+			console.log('kerim')
+			$('.intro-slider').slick({
+			infinite: true,
+			autoplay: true,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			autoplaySpeed: 2000,
+			speed: 1000,
+			arrows: true
+			});
+		})
+	</script>
 {% endblock %}

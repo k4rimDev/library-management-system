@@ -1,6 +1,6 @@
 {%extends "/shared/admin_layout.html" %}
 
-{% block title %}Manage Books - View {% endblock %}
+{% block title %}Manage Document - View {% endblock %}
 
 {% block content %}
 	<div class="container">	
@@ -19,11 +19,11 @@
 			  </div>
 			</form>
 		</div>
-
+		
 
 		<h2>Manage documents</h2>
 
-		<div class="d-flex">
+		<div class="d-flex flex-wrap">
 			{% if books %}
 				{% for book in books %}
 				<div class="card book d-flex align-items-center">
@@ -38,7 +38,7 @@
 				    <p class="card-text">
 				    <span class="badge badge-{{ 'success' if book['availability'] > 0 else 'danger' }}" style="margin-bottom: 5px;">
 				    	{% if book["count"] > 0%}
-				    	  Books Left: {{book['count']}}
+				    	  Document Left: {{book['count']}}
 				    	{% else %}
 				    	  All gone
 				    	{% endif %}
@@ -56,7 +56,7 @@
 				</div>
 				{% endfor %}
 			{% else %}
-				<p>No Books In Stash!</p>
+				<p>No Document In Stash!</p>
 			{% endif %}	
 		</div>
 	</div>

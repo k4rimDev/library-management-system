@@ -1,0 +1,65 @@
+{%extends "/shared/layout.html" %}
+
+{% block title %}Inbox {% endblock %}
+
+{% block content %}
+<div class="container">
+
+    {% if myinbox %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card  book" style="width:100%">
+                        <div class="card-body">
+                            <div class="row">
+                            <div class="col-md-5">
+                                <img src="/static/images/document.png" style="height: 250px; width: auto; 
+                                margin: 0 auto;
+                                display: block;" class="card-img-top">
+                                <!-- <div class="platforms mt-3 ml-3">
+                                    <h4 class="font-weight-light" style="margin-bottom: 0;">Avaliable On:</h4>
+                                    <div style="font-size: 2.1em;">
+                                        <i class="bi bi-xbox" style="color: green;"></i>
+                                        <i class="bi bi-youtube ml-2" style="color: red;"></i>
+                                        <i class="bi bi-windows ml-2" style="color: rgb(39, 144, 185);"></i>
+                                        <i class="bi bi-github ml-2" style=""></i>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="col-md-6">
+								<small class="text-danger">Title</small>
+                                <h2 class="mb-3">{{myinbox['title']}}</h2>
+								<small class="text-danger">Description</small>
+                                <p class="card-text mb-3">{{myinbox['description']}}</p>
+                                <p class="card-text font-weight-light"><b>Sender:</b> {{sender_email}}</p>
+
+								<div class="btns">
+									<a href="{{ url_for ('static' , filename=myinbox['filepath'])}}" class="btn btn-outline-primary" download>Download document</a>
+									<form action="/activity" method="POST" class="d-inline">
+                                        <input type="hidden" name="change_executer">
+										<button class="btn btn-outline-primary">Change the executor</button>
+									</form>
+
+									<form action="/activity" method="POST" class="d-inline">
+                                        <input type="hidden" name="increase_deadline">
+										<button class="btn btn-outline-primary">Increasing deadline</button>
+									</form>
+								</div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="card bwrapper">
+                <div class="card-body">
+                    <div class="text-center mb-4" style="
+                    margin-top: 21px !important;"><i class="text-center mt-4 bi-book" style="
+                        font-size: 6em; "></i></div>
+                    <p class="text-center mb-4">No Document Found!</p>
+                </div>
+            </div>
+        {% endif %}	
+</div>
+{% endblock %}

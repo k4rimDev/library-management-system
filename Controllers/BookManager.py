@@ -48,3 +48,6 @@ class BookManager():
 
 	def add(self, title, count, edition, author, availability, description):
 		self.dao.add(title, count, edition, author, availability, description)
+
+	def update(self, id, title, count, availability, description):
+		self.dao.update(id, title, count, availability, description)

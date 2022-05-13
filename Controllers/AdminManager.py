@@ -25,9 +25,10 @@ class AdminManager():
 		
 	def getUsersList(self):
 		admin = self.user.list()
-		print(admin)
+		# print(admin)
 
 		return admin
+
 
 	def signout(self):
 		self.admin.signout()
@@ -35,7 +36,8 @@ class AdminManager():
 	def user_list(self):
 		return self.user.list()
 
-	# def delete_user(self, id):
-	# 	user = self.user.delete(id)
-
-	# 	return user
+	def getAllDocumentList(self):
+		return self.dao.getAllDocumentByAdmin()
+	
+	def	getDocumentList(self, document_id):
+		return self.dao.getDocumentByAdmin(document_id)

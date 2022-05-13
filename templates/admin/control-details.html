@@ -1,0 +1,50 @@
+{%extends "/shared/admin_layout.html" %}
+
+{% block title %}Control E-doc process {% endblock %}
+
+{% block content %}
+	
+<div class="container">
+    <div>
+        <h2>Control E-doc process</h2>
+        <br>
+        
+        <div class="card border-warning mb-3 w-100 p-5" style="width: 18rem;">
+            <div class="d-flex justify-content-between">
+                <div class="sender-side">
+                    <div class="mb-2">
+                        <img style="height: auto !important;" src="/static/images/avatar.jpg">
+                    </div>
+                    <p>Sender: {{sender}}</p>
+                    <p>Email: {{sender_email}}</p>
+                </div>
+
+                <div class="receiver-side">
+                    <div class="mb-2">
+                        <img style="height: auto !important;" src="/static/images/avatar.jpg">
+                    </div>
+                    <p>Receiver: {{reciever}}</p>
+                    <p>Email: {{receiver_email}}</p>
+                </div>
+
+                <div class="document-side">
+                    <p>
+                        Send at: {{send_time}}
+                    </p>
+
+                    <p>
+                        Deadline in: {{removed_at}}
+                    </p>
+                    <p>Document title: {{document_title}}</p>
+                    <p>Document description: {{document_description}}</p>
+                    <a href="{{ url_for ('static' , filename=file_path)}}" class="btn btn-outline-primary" download>Download document</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+	<script>
+
+	</script>
+{% endblock %}

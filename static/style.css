@@ -19,7 +19,7 @@ h1, h2, h3, h4 {
 }
 
 .home {
-	background-image: url("/static/images/bg.jpg");
+	/* background-image: url("/static/images/bg.jpg"); */
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: 0 9.5em;

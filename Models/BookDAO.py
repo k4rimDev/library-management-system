@@ -4,7 +4,12 @@ class BookDAO():
 		self.db.table = "books"
 
 	def add (self, title, count, edition, author, availability, description):
-		q = self.db.query("INSERT INTO book (name, desc, author, availability, edition, count) VALUES('{}', '{}', '{}', '{}', '{}', '{}');".format(title, description, author, availability, edition, count))
+		q = self.db.query("INSERT INTO books (`name`, `desc`, `author`, `availability`, `edition`, `count`) VALUES('{}', '{}', '{}', '{}', '{}', {});".format(title, description, author, availability, edition, count))
+		self.db.commit()
+		return q
+
+	def update (self, id, title, count, availability, description):
+		q = self.db.query("UPDATE books SET `name` = '{}', `desc` = '{}', `availability` = '{}', `count` = {} WHERE id = {};".format(title, description, availability, count, id))
 		self.db.commit()
 		return q
 
@@ -31,7 +36,7 @@ class BookDAO():
 
 		books = q.fetchall()
 
-		print(books)
+		# print(books)
 		return books
 
 	def getBooksCountByUser(self, user_id):

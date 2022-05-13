@@ -1,3 +1,6 @@
+from xml.dom.minidom import Document
+
+
 class UserDAO():
 	def __init__(self, DAO):
 		self.db = DAO
@@ -28,13 +31,42 @@ class UserDAO():
 		user = q.fetchone()
 
 		return user
+	
+	def getInboxByUser(self, id):
+		q = self.db.query("select * from document where receiver_id = {}".format(id))
+
+		inboxes = q.fetchall()
+
+		return inboxes
+
+	def getDocumentByUser(self, id):
+		q = self.db.query("select * from document where id = {}".format(id))
+
+		document = q.fetchone()
+
+		return document
+
+
+	def getSendByUser(self, id):
+		q = self.db.query("select * from document where sender_id = {}".format(id))
+
+		sends = q.fetchall()
+
+		return sends
+
+	def check_deadline(self, now_time):
+		q = self.db.query("delete from document where removed_at > {}".format(now_time))
+		self.db.commit()
+
+		return q
+	
 
 	def add(self, user):
-		name = user['name']
-		email = user['email']
-		password = user['password']
+		name = str(user['name'])
+		email = str(user['email'])
+		password = str(user['password'])
 
-		q = self.db.query("INSERT INTO @table (name, email, password) VALUES('{}', '{}', '{}');".format(name, email, password))
+		q = self.db.query("INSERT INTO @table (name, email, password, bio, mob, `lock`) VALUES('{}', '{}', '{}', '{}', '{}', {});".format(name, email, password, '', '', 0))
 		self.db.commit()
 		
 		return q
@@ -66,3 +98,7 @@ class UserDAO():
 		q = self.db.query("INSERT INTO admin (email, password) VALUES('{}', '{}')".format(user_email['email'], user_password['password']))
 		self.db.commit()		
 		# return q
+	def send_document(self, sender_id, receiver_id, title, description, file_path, removed_at):	
+		q = self.db.query("INSERT INTO document (sender_id, receiver_id, title, description, filepath, removed_at) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(sender_id, receiver_id, title, description, file_path, removed_at))
+		self.db.commit()
+		

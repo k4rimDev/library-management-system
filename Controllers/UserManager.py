@@ -37,7 +37,7 @@ class UserManager():
 		if user is not None:
 			return "already_exists"
 
-		user_info = {"name": name, "email": email, "password": password}
+		user_info = {"name": name, "email": email, "password": password, "bio": '', "mob": '', "lock": '0'}
 		
 		new_user = self.dao.add(user_info)
 
@@ -58,6 +58,12 @@ class UserManager():
 	def getBooksList(self, id):
 		return self.book.getBooksByUser(id)
 
+	def getSendList(self, id):
+		return self.dao.getSendByUser(id)
+
+	def getInboxList(self, id):
+		return self.dao.getInboxByUser(id)
+
 	def getUsersByBook(self, book_id):
 		return self.dao.getUsersByBook(book_id)
 
@@ -66,3 +72,15 @@ class UserManager():
 
 	def be_admin(self, id):
 		self.dao.be_admin(id)
+
+	def getUserId(self, email):
+		return self.dao.getByEmail(email)
+	
+	def getDocument(self, id):
+		return self.dao.getDocumentByUser(id)
+
+	def sendDocument(self, sender_id, receiver_id, title, description, file_path, removed_at):
+		return self.dao.send_document(sender_id, receiver_id, title, description, file_path, removed_at)
+
+	def checkDeadline(self, now_time):
+		return self.dao.check_deadline(self, now_time)

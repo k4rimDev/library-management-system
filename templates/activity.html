@@ -18,45 +18,61 @@
             <div class="card-body">
                 <div class="row d-flex justify-content-between">
                     <div class="left-activity p-2 border card rounded w-25">
-						<button type="button" class="create-document btn btn-outline-danger rounded-pill mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">
+						<button type="button" class="create-document btn btn-outline-danger rounded-pill mb-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
 							<i class="fa-solid fa-plus"></i>
 							Write an e-document
 						</button>
 						
 						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  <div class="modal-dialog modal-dialog-centered">
+						  <div class="modal-dialog modal-dialog-centered modal-lg">
 							<div class="modal-content">
+								<form method="POST" action="/activity" enctype="multipart/form-data">
 							  <div class="modal-header">
 								<h5 class="modal-title" id="exampleModalLabel">New document</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							  </div>
 							  <div class="modal-body">
-								<form method="POST">
 								  <div class="mb-3">
 									<label for="desctiption" class="col-form-label">To whom:</label>
-									<input type="text" class="form-control" id="recipient-name">
+									<input type="text" class="form-control" id="recipient-name" name="reciever">
+								  </div>
+
+								  <div class="mb-3">
+									<label for="document-title" class="col-form-label">Title:</label>
+									<input type="text" class="form-control" id="title" name="title">
 								  </div>
 
 								  <div class="mb-3">
 									<label for="recipient-name" class="col-form-label">Description:</label>
-									<input type="text" class="form-control" id="desctiption">
+									<input type="text" class="form-control" id="desctiption" name="description">
 								  </div>
 
 								  <div class="mb-3">
 									<label for="message-text" class="col-form-label">Document:</label>
 									<textarea class="form-control" id="message-text"></textarea>
+									<div class="document-btn text-center mt-4">
+										<button type="button" class="btn btn-warning" id="generate">Convert to word</button>
+									  </div>
 								  </div>
 
 								  <div class="mb-3">
+									  <hr>
+									  <p class="mb-3 text-center">Or</p>
 									<label for="formFileSm" class="form-label">File attachment</label>
-									<input class="form-control form-control-sm" id="formFileSm" type="file">
-								  </div>
-								</form>
+									<input class="form-control form-control-sm" id="formFileSm" type="file" name="file">
+								   </div>
+
+									<div class="mb-3">
+										<label for="formDate" class="form-label">Deadline</label>
+										<input class="form-control form-control-sm" id="formDate" type="date" name="removed_at">
+									</div>
+								
 							  </div>
 							  <div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 								<button type="submit" class="btn btn-primary">Send document</button>
 							  </div>
+							  </form>
 							</div>
 						  </div>
 						</div>
@@ -79,35 +95,32 @@
 							<div class="tab-content" id="myTabContent">
 								<div class="tab-pane fade show active" id="inbox" role="tabpanel" aria-labelledby="inbox-tab">
 								<div class="">
-									{% if books %}
+									{% if inboxes %}
 										<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
 										<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
 											font-size: 6em; "></i></div>
-										{% for book in books %}
+										{% for inbox in inboxes %}
 											<div class="card book">
-												<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+												<img src="/static/images/document.png" class="card-img-top">
 												<div class="card-body">
-				    								<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
-													{% if book['availability'] < 1 %}
-														<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
-													{% endif %}
+													<h5 class="card-text">Title: <a href="/inboxes/{{inbox['id']}}" class="font-weight-light">{{inbox['title']}}</a></h5>
+				    								<!-- <p class="card-title"><a href="/books/{{inbox['id']}}">{{inbox['filepath']}}</a></p> -->
 													<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
 
-													<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
 												</div>
 											</div>
 										{% endfor %}
 										{% else %}
 											<div class="card bwrapper">
 												<div class="card-body">
-													<h4 class="text-center mt-4">Manage Books</h4>
+													<h4 class="text-center mt-4">Manage Documents</h4>
 													<div class="text-center mb-4" style="margin-top: 21px !important;">
 														<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
 														<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
 														<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
 														</svg>
 													</div>
-													<p class="text-center mb-4">No Books You Reserved!</p>
+													<p class="text-center mb-4">No Inbox Document!!</p>
 												</div>
 											</div>
 										{% endif %}	
@@ -116,35 +129,33 @@
 								
 								<div class="tab-pane fade show" id="sent" role="tabpanel" aria-labelledby="sent-tab">
 									<div class="">
-										{% if books %}
+										{% if sends %}
 											<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
 											<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
 												font-size: 6em; "></i></div>
-											{% for book in books %}
+											{% for send in sends %}
 												<div class="card book">
-													<img src="/static/images/document.png" class="card-img-top" alt="{{book[1]}}">
+													<img src="/static/images/document.png" class="card-img-top">
 													<div class="card-body">
-														<h5 class="card-title"><a href="/books/{{book['id']}}">{{book['name']}}</a></h5>
-														{% if book['availability'] < 1 %}
-															<span class="badge badge-warning" style="margin-bottom: 5px;">Assigned</span>
-														{% endif %}
+														<h5 class="card-text">Title: <a href="/send/{{send['id']}}" class="font-weight-light">{{send['title']}}</a></h5>
+														<!-- <p class="card-title"><a href="/books/{{send['id']}}">{{send['filepath']}}</a></p> -->
+
 														<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
 	
-														<p class="card-text">Author: <span class="font-weight-light">{{book['author']}}</span></p>
 													</div>
 												</div>
 											{% endfor %}
 											{% else %}
 												<div class="card bwrapper">
 													<div class="card-body">
-														<h4 class="text-center mt-4">Manage Books</h4>
+														<h4 class="text-center mt-4">Manage Documents</h4>
 														<div class="text-center mb-4" style="margin-top: 21px !important;">
 															<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
 															<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
 															<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
 															</svg>
 														</div>
-														<p class="text-center mb-4">No Books You Reserved!</p>
+														<p class="text-center mb-4">No Sent Document!!</p>
 													</div>
 												</div>
 											{% endif %}	
@@ -176,14 +187,14 @@
 												{% else %}
 													<div class="card bwrapper">
 														<div class="card-body">
-															<h4 class="text-center mt-4">Manage Books</h4>
+															<h4 class="text-center mt-4">Manage Documents</h4>
 															<div class="text-center mb-4" style="margin-top: 21px !important;">
 																<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
 																<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
 																<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
 																</svg>
 															</div>
-															<p class="text-center mb-4">No Books You Reserved!</p>
+															<p class="text-center mb-4">No Archived Document!!</p>
 														</div>
 													</div>
 												{% endif %}	
@@ -198,4 +209,6 @@
             </form>
         </div>
 	</div>
+</div>
+
 {% endblock %}

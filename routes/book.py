@@ -25,7 +25,7 @@ def home(id):
 			user_books = book_manager.getReserverdBooksByUser(user_id=user_manager.user.uid())['user_books'].split(',')
 		
 		if b and len(b) <1:
-			return render_template('book_view.html', error="No book found!")
+			return render_template('book_view.html', error="No Document found!")
 
 		return render_template("book_view.html", books=b, g=g, user_books=user_books)
 	else:
@@ -59,7 +59,7 @@ def add(id):
 	b = book_manager.list()
 	user_manager.user.set_session(session, g)
 	
-	return render_template("books.html", msg="Book reserved", books=b, g=g)
+	return render_template("books.html", msg="Document reserved", books=b, g=g)
 
 
 @book_view.route('/books/search', methods=['GET'])
@@ -79,5 +79,5 @@ def search():
 	if len(d) >0:
 		return render_template("books.html", search=True, books=d, count=len(d), keyword=escape(keyword), g=g)
 
-	return render_template('books.html', error="No books found!", keyword=escape(keyword))
+	return render_template('books.html', error="No Document found!", keyword=escape(keyword))
 

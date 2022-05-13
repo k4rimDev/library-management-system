@@ -95,9 +95,42 @@ def users_admin(id):
 	admin = admin_manager.get(id)
 	myusers = admin_manager.getUsersList()
 
-	return render_template('users.html', g=g, admin=admin, users=myusers)
+	return render_template('users.html', g=g)
 
 
+
+# Control section
+@admin_view.route('/control/', methods=['GET'])
+@admin_manager.admin.login_required
+def control():
+	admin_manager.admin.set_session(session, g)
+	documents = admin_manager.dao.getAllDocumentByAdmin()
+
+	id = int(admin_manager.admin.uid())
+	admin = admin_manager.get(id)
+
+	return render_template('admin/control.html', g=g, admin = admin, documents = documents)
+
+
+@admin_view.route('control/details/<int:control_id>', methods=['GET'])
+@admin_manager.admin.login_required
+def control_details(control_id):
+	admin_manager.admin.set_session(session, g)
+
+	if control_id != None:
+
+
+		id = int(admin_manager.admin.uid())
+		admin = admin_manager.get(id)
+		document_info = admin_manager.getDocumentList(control_id)
+
+		myusers = admin_manager.getUsersList()
+		sender = admin_manager.user.getById(document_info['sender_id'])
+		reciever = admin_manager.user.getById(document_info['receiver_id'])
+
+		print(document_info['filepath'])
+
+		return render_template('admin/control-details.html', g=g, admin = admin, users = myusers, reciever = reciever['name'], sender = sender['name'], sender_email=sender['email'], receiver_email=reciever['email'], document_title = document_info['title'], document_description = document_info['description'], file_path = document_info['filepath'], send_time = document_info['create_at'], removed_at = document_info['removed_at'])
 
 
 
@@ -125,12 +158,12 @@ def view_book(id):
 		users = user_manager.getUsersByBook(id)
 
 		print('----------------------------')
-		print(users)
+		# print(users)
 		
 		if b and len(b) <1:
-			return render_template('books/book_view.html', error="No book found!")
+			return render_template('books/book_view.html', error="No Documents found!")
 
-		return render_template("books/book_view.html", books=b, books_owners=users, g=g)
+		return render_template("books/book_view.html", books=b, books_owners=users, g=g, file_path='../media/cv-m.pdf')
 
 
 @admin_view.route('/books/add', methods=['GET', 'POST'])
@@ -138,30 +171,20 @@ def view_book(id):
 def book_add():
 	admin_manager.admin.set_session(session, g)
 
-	# _form = request.form
-	# title = str(_form['title'])
-	# qty = str(_form['qty'])
-	# available = str(_form['avaliable'])
-	# description = str(_form['desc'])
-
-
-	# print(title, qty, available, description)
-
-
 	if request.method == 'POST':
 		_form = request.form
 		title = str(_form['title'])
-		qty = str(_form['qty'])
-		available = str(_form['avaliable'])
+		qty = _form['qty']
+		available = _form['avaliable']
 		description = str(_form['desc'])
 
-		print(title, qty, available, description)
+		# print(title, qty, available, description)
 
-		book_manager.add(title, qty, '1', 'Admin', available, description)
+		book_manager.add(title, qty, '1', 'Admin', '1', description)
 		
-		return render_template('books/books.html', g=g)
+		# return render_template('books/add', g=g)
 	
-	return render_template('books/add.html', g=g)
+	return render_template('admin/books/add.html', g=g)
 
 
 @admin_view.route('/books/edit/<int:id>', methods=['GET', 'POST'])
@@ -173,10 +196,17 @@ def book_edit(id):
 		b = book_manager.getBook(id)
 
 		if b and len(b) <1:
-			return render_template('edit.html', error="No book found!")
+			return render_template('edit.html', error="No documents found!")
 		else:
 			if request.method == 'POST':
-				pass
+				_form = request.form
+				title = str(_form['title'])
+				qty = _form['qty']
+				available = _form['avaliable']
+				description = str(_form['desc'])
+
+				book_manager.update(id, title, qty, '0', description)
+
 			return render_template("books/edit.html", book=b, g=g)
 	
 	return redirect('/books')
@@ -212,5 +242,5 @@ def search():
 	if len(d) >0:
 		return render_template("books/views.html", search=True, books=d, count=len(d), keyword=escape(keyword), g=g, admin=admin)
 
-	return render_template('books/views.html', error="No books found!", keyword=escape(keyword))
+	return render_template('books/views.html', error="No documents found!", keyword=escape(keyword))
 
