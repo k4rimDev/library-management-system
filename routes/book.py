@@ -59,7 +59,7 @@ def add(id):
 	b = book_manager.list()
 	user_manager.user.set_session(session, g)
 	
-	return render_template("books.html", msg="Document reserved", books=b, g=g)
+	return render_template("books.html", msg="Document archived", books=b, g=g)
 
 
 @book_view.route('/books/search', methods=['GET'])

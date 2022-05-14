@@ -1,17 +1,17 @@
 {%extends "/shared/layout.html" %}
 
-{% block title %}Inbox {% endblock %}
+{% block title %}Sends {% endblock %}
 
 {% block content %}
 <div class="container">
 
-    {% if myinbox %}
+    {% if myarchives %}
             <div class="row">
                 <div class="col-md-12">
                     <div class="card  book" style="width:100%">
                         <div class="card-body">
                             <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <img src="/static/images/document.png" style="height: 250px; width: auto; 
                                 margin: 0 auto;
                                 display: block;" class="card-img-top">
@@ -25,31 +25,14 @@
                                     </div>
                                 </div> -->
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
 								<small class="text-danger">Title</small>
-                                <h2 class="mb-3">{{myinbox['title']}}</h2>
+                                <h2 class="mb-3">{{myarchives['title']}}</h2>
 								<small class="text-danger">Description</small>
-                                <p class="card-text mb-3">{{myinbox['description']}}</p>
-                                <p class="card-text font-weight-light"><b>Sender:</b> {{sender_email}}</p>
+                                <p class="card-text mb-3">{{myarchives['description']}}</p>
+                                <p class="card-text font-weight-light"><b>Receiver:</b> {{receiver_email}}</p>
 
-								<div class="d-inline">
-
-                                    <form method="POST" class="d-inline">
-                                        <input type="hidden" name="archive_document" value="archive">
-                                        <button class="btn btn-outline-primary" type="submit">Archive document</button>
-                                    </form>
-
-									<a href="{{ url_for ('static' , filename=myinbox['filepath'])}}" class="btn btn-outline-primary" download>Download document</a>
-									<form method="POST" class="d-inline">
-                                        <input type="hidden" name="change_executer" value="executer">
-										<button class="btn btn-outline-primary" type="submit">Change the executor</button>
-									</form>
-
-									<form method="POST" class="d-inline">
-                                        <input type="hidden" name="increase_deadline" value="deadline">
-										<button class="btn btn-outline-primary" type="submit">Increasing deadline</button>
-									</form>
-								</div>
+                                <a href="{{ url_for ('static' , filename=myarchives['file_path'])}}" class="btn btn-outline-primary" download>Download document</a>
                             </div>
                             </div>
                         </div>

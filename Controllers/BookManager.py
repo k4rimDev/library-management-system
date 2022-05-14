@@ -46,8 +46,8 @@ class BookManager():
 	def delete(self, id):
 		self.dao.delete(id)
 
-	def add(self, title, count, edition, author, availability, description):
-		self.dao.add(title, count, edition, author, availability, description)
+	def add(self, title, count, edition, author, availability, description, file_path):
+		self.dao.add(title, count, edition, author, availability, description, file_path)
 
 	def update(self, id, title, count, availability, description):
 		self.dao.update(id, title, count, availability, description)

@@ -74,7 +74,7 @@
 								</div>
 								{% endif %}
 
-                            <a href="../../{{file_path}}" class="btn btn-outline-primary" download>Download document</a>
+                            <a href="{{ url_for ('static' , filename=file_path)}}" class="btn btn-outline-primary" download>Download document</a>
 
                             </div>
                             </div>

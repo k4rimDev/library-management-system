@@ -79,10 +79,16 @@
 	
 						<ul class="nav nav-tabs flex-column border-0" id="myTab" role="tablist">
 							<li class="nav-item border-0">
+								<a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Info</a>
+							</li>
+							<li class="nav-item border-0">
 							  <a class="nav-link active" id="inbox-tab" data-toggle="tab" href="#inbox" role="tab" aria-controls="inbox" aria-selected="true">Inbox</a>
 							</li>
 							<li class="nav-item border-0">
 								<a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">Sent</a>
+							</li>
+							<li class="nav-item border-0">
+								<a class="nav-link" id="reserved-tab" data-toggle="tab" href="#reserved" role="tab" aria-controls="reserved" aria-selected="false">Reserved</a>
 							</li>
 							<li class="nav-item border-0">
 								<a class="nav-link" id="archive-tab" data-toggle="tab" href="#archive" role="tab" aria-controls="archive" aria-selected="false">Archive</a>
@@ -93,6 +99,43 @@
 
 						  <div class="col-md-12 ">
 							<div class="tab-content" id="myTabContent">
+
+								<div class="tab-pane fade show" id="info" role="tabpanel" aria-labelledby="info-tab">
+									<div class="">
+										{% if inboxes %}
+											<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+											<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+												font-size: 6em; "></i></div>
+											{% for inbox in inboxes %}
+												<div class="card book">
+													<img src="/static/images/document.png" class="card-img-top">
+													<div class="card-body">
+														<h5 class="card-text">Title: <a href="/inboxes/{{inbox['id']}}" class="font-weight-light">{{inbox['title']}}</a></h5>
+														<!-- <p class="card-title"><a href="/books/{{inbox['id']}}">{{inbox['filepath']}}</a></p> -->
+														<!-- <p class="card-text bookdesc">{{book['desc']}}</p> -->
+	
+													</div>
+												</div>
+											{% endfor %}
+											{% else %}
+												<div class="card bwrapper">
+													<div class="card-body">
+														<h4 class="text-center mt-4">Manage Documents</h4>
+														<div class="text-center mb-4" style="margin-top: 21px !important;">
+															<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+															<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+															<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+															</svg>
+														</div>
+														<p class="text-center mb-4">No Info!!</p>
+													</div>
+												</div>
+											{% endif %}	
+											</div>
+									</div>
+
+
+
 								<div class="tab-pane fade show active" id="inbox" role="tabpanel" aria-labelledby="inbox-tab">
 								<div class="">
 									{% if inboxes %}
@@ -164,7 +207,7 @@
 
 
 
-									<div class="tab-pane fade show" id="archive" role="tabpanel" aria-labelledby="archive-tab">
+									<div class="tab-pane fade show" id="reserved" role="tabpanel" aria-labelledby="reserved-tab">
 										<div class="">
 											{% if books %}
 												<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
@@ -194,12 +237,44 @@
 																<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
 																</svg>
 															</div>
-															<p class="text-center mb-4">No Archived Document!!</p>
+															<p class="text-center mb-4">No Reserved Document!!</p>
 														</div>
 													</div>
 												{% endif %}	
 												</div>
 										</div>
+
+
+										<div class="tab-pane fade show" id="archive" role="tabpanel" aria-labelledby="archive-tab">
+											<div class="">
+												{% if archives %}
+													<!-- <h2 class="text-center mt-4" style="margin-bottom: 0.5em;">Your Books</h2> -->
+													<div class="text-center mb-4 mt-4"><i class="text-center mt-4 bi-book" style="
+														font-size: 6em; "></i></div>
+													{% for archive in archives %}
+														<div class="card book">
+															<img src="/static/images/document.png" class="card-img-top">
+															<div class="card-body">
+																<h5 class="card-title">Title: <a href="/archive/{{archive['id']}}">{{archive['title']}}</a></h5>
+															</div>
+														</div>
+													{% endfor %}
+													{% else %}
+														<div class="card bwrapper">
+															<div class="card-body">
+																<h4 class="text-center mt-4">Manage Documents</h4>
+																<div class="text-center mb-4" style="margin-top: 21px !important;">
+																	<!-- <i class="text-center mt-4 bi-book" style="font-size: 6em; "></i> -->
+																	<svg xmlns="http://www.w3.org/2000/svg" width="6em" height="6em" fill="currentColor" class="bi bi-activity" viewBox="0 0 16 16">
+																	<path fill-rule="evenodd" d="M6 2a.5.5 0 0 1 .47.33L10 12.036l1.53-4.208A.5.5 0 0 1 12 7.5h3.5a.5.5 0 0 1 0 1h-3.15l-1.88 5.17a.5.5 0 0 1-.94 0L6 3.964 4.47 8.171A.5.5 0 0 1 4 8.5H.5a.5.5 0 0 1 0-1h3.15l1.88-5.17A.5.5 0 0 1 6 2Z"/>
+																	</svg>
+																</div>
+																<p class="text-center mb-4">No Archived Document!!</p>
+															</div>
+														</div>
+													{% endif %}	
+													</div>
+											</div>
 							</div>
 						  </div>
 

@@ -3,8 +3,8 @@ class BookDAO():
 		self.db = DAO
 		self.db.table = "books"
 
-	def add (self, title, count, edition, author, availability, description):
-		q = self.db.query("INSERT INTO books (`name`, `desc`, `author`, `availability`, `edition`, `count`) VALUES('{}', '{}', '{}', '{}', '{}', {});".format(title, description, author, availability, edition, count))
+	def add (self, title, count, edition, author, availability, description, file_path):
+		q = self.db.query("INSERT INTO books (`name`, `desc`, `author`, `availability`, `edition`, `count`, `filepath`) VALUES('{}', '{}', '{}', '{}', '{}', {}, '{}');".format(title, description, author, availability, edition, count, file_path))
 		self.db.commit()
 		return q
 

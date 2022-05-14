@@ -31,6 +31,11 @@
 								<small class="text-danger">Description</small>
                                 <p class="card-text mb-3">{{mysends['description']}}</p>
                                 <p class="card-text font-weight-light"><b>Receiver:</b> {{receiver_email}}</p>
+                                
+                                <form method="POST" class="d-inline">
+                                    <input type="hidden" name="archive" value="archive">
+                                    <button class="btn btn-outline-primary" type="submit">Archive document</button>
+                                </form>
 
                                 <a href="{{ url_for ('static' , filename=mysends['filepath'])}}" class="btn btn-outline-primary" download>Download document</a>
                             </div>

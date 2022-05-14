@@ -7,10 +7,11 @@
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+-- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET SESSION sql_mode='ONLY_FULL_GROUP_BY';
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+00:0x0";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -39,7 +40,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`id`, `email`, `password`) VALUES
-(1, 'hamza@gmail.com', '025db420560617303c2ba988d050ec62562343bc0fb0358d31d2f0bae8dbede8');
+(1, 'kerim@gmail.com', '1234');
 
 -- --------------------------------------------------------
 
@@ -54,7 +55,20 @@ CREATE TABLE `books` (
   `author` varchar(255) NOT NULL,
   `availability` tinyint(1) NOT NULL,
   `edition` varchar(255) NOT NULL,
+  `filepath` varchar(100),
   `count` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `info` (
+  `id` int(11) NOT NULL primary key auto_increment,
+  `type` varchar(255) NOT NULL,
+  `sender_id` INT(10) NOT NULL,
+  `receiver_id` INT(10) NOT NULL,
+  `title` VARCHAR(1000) NOT NULL,
+  `description` TEXT,
+  `file_path` VARCHAR(10000),
+  `create_at` datetime Not NULL,
+  `removed_at` datetime
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -77,6 +91,33 @@ CREATE TABLE `reserve` (
   `book_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `document` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`sender_id` INT(10) NOT NULL,
+	`receiver_id` INT(10) NOT NULL,
+	`title` VARCHAR(1000) NOT NULL,
+	`description` TEXT,
+	`filepath` VARCHAR(100),
+	`create_at` datetime Not NULL DEFAULT CURRENT_TIMESTAMP,
+	`removed_at` date,
+	-- `feedback` int(2),
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `archive` (
+  `id` INT(10) NOT NULL auto_increment,
+  `sender_id` INT(10) NOT NULL,
+  `receiver_id` INT(10) NOT NULL,
+  `title` VARCHAR(1000) NOT NULL,
+  `description` TEXT,
+  `file_path` VARCHAR(10000),
+  `create_at` datetime Not NULL,
+  `removed_at` datetime,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Dumping data for table `reserve`
 --
@@ -90,6 +131,7 @@ INSERT INTO `reserve` (`id`, `user_id`, `book_id`) VALUES
 --
 -- Table structure for table `users`
 --
+
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
@@ -107,8 +149,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `bio`, `mob`, `lock`, `created_at`) VALUES
-(1, 'Hamza', 'hamza@gmail.com', '025db420560617303c2ba988d050ec62562343bc0fb0358d31d2f0bae8dbede8', 'They watch you from the shelf while you sleep 👀. Are you dreaming of them, they wonder, in that wistful mood books are prone to at night when they’re bored and there’s nothing else to do but tease the cat.?', '', 0, '2021-11-09 00:00:00'),
-(6, 'Naveed Ali', 'naveed@gmail.com', '025db420560617303c2ba988d050ec62562343bc0fb0358d31d2f0bae8dbede8', 'Hi :)! Long time no see ❤️', '', 0, '2021-11-18 23:07:53');
+(1, 'Kerim', 'kerim@gmail.com', '1234kk', 'They watch you from the shelf while you sleep 👀. Are you dreaming of them, they wonder, in that wistful mood books are prone to at night when they’re bored and there’s nothing else to do but tease the cat.?', '', 0, '2022-02-14 00:00:00'),
+(6, 'KK', 'kk@gmail.com', '1234kk', 'Hi :)! Long time no see ❤️', '', 0, '2022-05-13 23:07:53');
 
 --
 -- Indexes for dumped tables

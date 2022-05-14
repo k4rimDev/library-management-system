@@ -1,10 +1,19 @@
-from flask import Blueprint, g, escape, session, redirect, render_template, request, jsonify, Response
+from flask import Blueprint, g, escape, session, redirect, render_template, request, jsonify, Response, Flask
 from app import DAO
 from Misc.functions import *
 
 from Controllers.AdminManager import AdminManager
 from Controllers.BookManager import BookManager
 from Controllers.UserManager import UserManager
+from werkzeug.utils import secure_filename
+
+
+import os
+
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'kerim123'
+app.config['UPLOAD_PATH'] = 'static/media'
 
 admin_view = Blueprint('admin_routes', __name__, template_folder='../templates/admin/', url_prefix='/admin')
 
@@ -63,6 +72,7 @@ def users_view():
 	admin = admin_manager.get(id)
 	myusers = admin_manager.getUsersList()
 
+
 	return render_template('users.html', g=g, admin=admin, users=myusers)
 
 
@@ -95,7 +105,7 @@ def users_admin(id):
 	admin = admin_manager.get(id)
 	myusers = admin_manager.getUsersList()
 
-	return render_template('users.html', g=g)
+	return render_template('users.html', g=g, admin=admin, users=myusers)
 
 
 
@@ -163,7 +173,7 @@ def view_book(id):
 		if b and len(b) <1:
 			return render_template('books/book_view.html', error="No Documents found!")
 
-		return render_template("books/book_view.html", books=b, books_owners=users, g=g, file_path='../media/cv-m.pdf')
+		return render_template("books/book_view.html", books=b, books_owners=users, g=g, file_path=b['filepath'])
 
 
 @admin_view.route('/books/add', methods=['GET', 'POST'])
@@ -175,12 +185,17 @@ def book_add():
 		_form = request.form
 		title = str(_form['title'])
 		qty = _form['qty']
-		available = _form['avaliable']
 		description = str(_form['desc'])
 
-		# print(title, qty, available, description)
+		file = request.files["file"]
 
-		book_manager.add(title, qty, '1', 'Admin', '1', description)
+		file.save(os.path.join(app.config['UPLOAD_PATH'], str(secure_filename(file.filename))))
+		file_path = str(app.config['UPLOAD_PATH'] + '/' + str(secure_filename(file.filename)))[7:]
+
+		print(file_path)
+
+
+		book_manager.add(title, qty, '1', 'Admin', '1', description, file_path)
 		
 		# return render_template('books/add', g=g)
 	
@@ -202,7 +217,6 @@ def book_edit(id):
 				_form = request.form
 				title = str(_form['title'])
 				qty = _form['qty']
-				available = _form['avaliable']
 				description = str(_form['desc'])
 
 				book_manager.update(id, title, qty, '0', description)

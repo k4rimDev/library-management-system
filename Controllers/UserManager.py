@@ -84,3 +84,12 @@ class UserManager():
 
 	def checkDeadline(self, now_time):
 		return self.dao.check_deadline(self, now_time)
+
+	def addArchive(self, sender_id, receiver_id, title, description, file_path, created_at):
+		return self.dao.add_archive(sender_id, receiver_id, title, description, file_path, created_at)
+
+	def showAllArchived(self):
+		return self.dao.show_all_archived()
+	
+	def showOneArchived(self, id):
+		return self.dao.show_one_archived(id)

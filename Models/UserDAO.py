@@ -55,7 +55,7 @@ class UserDAO():
 		return sends
 
 	def check_deadline(self, now_time):
-		q = self.db.query("delete from document where removed_at > {}".format(now_time))
+		q = self.db.query("delete from document where removed_at <= '{}'".format(now_time))
 		self.db.commit()
 
 		return q
@@ -102,3 +102,28 @@ class UserDAO():
 		q = self.db.query("INSERT INTO document (sender_id, receiver_id, title, description, filepath, removed_at) VALUES('{}', '{}', '{}', '{}', '{}', '{}')".format(sender_id, receiver_id, title, description, file_path, removed_at))
 		self.db.commit()
 		
+
+
+	# Add archive table
+	def add_archive(self, sender_id, receiver_id, title, description, file_path, created_at):
+		q = self.db.query("INSERT INTO archive (sender_id, receiver_id, title, description, file_path, create_at) VALUES ('{}', '{}', '{}', '{}', '{}', '{}')".format(sender_id, receiver_id, title, description, file_path, created_at))
+		self.db.commit()
+
+		return q
+
+	# Show all archived document
+	def show_all_archived(self):
+		documents = self.db.query("SELECT * FROM archive")
+		documents = documents.fetchall()
+		self.db.commit()
+
+		return documents
+
+	
+	# Show one archived document
+	def show_one_archived(self, id):
+		documents = self.db.query("SELECT * FROM archive WHERE id = '{}'".format(id))
+		document = documents.fetchone()
+		self.db.commit()
+
+		return document

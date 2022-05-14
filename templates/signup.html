@@ -70,13 +70,24 @@
 					<label for="name">Name</label>
 					<input type="text" class="form-control" id="name" name="name" aria-describedby="name" placeholder="Your name">
 				</div>
-			  <div class="form-group">
-			    <label for="email">Email address</label>
-			    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email address">
-			    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-			  </div>
-			  <div class="form-group input-div pass mb-3">
+			<div class="form-group">
+				<label for="email">Email address</label>
+				<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email address">
+				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+			</div>
+
+			<div class="form-group input-div pass mb-3">
 				<input type="password" class="form-control" id="password" name="password" id="exampleInputPassword1" placeholder="Password">
+			</div>
+
+
+			<div class="mb-3">
+				<label for="checkbox">
+					<a href="/privacy">
+						Accept the pravicy rules
+					</a>
+				</label>
+				<input type="checkbox" class="form-check-input mt-1 ms-4" id="checkbox" name="checkbox" id="exampleInputCheckbox1" required value="accept">
 			</div>
 
 			  <button type="submit" class="btn btn-primary">Signup</button>

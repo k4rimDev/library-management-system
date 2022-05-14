@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Blueprint, g, escape, session, redirect, render_template, request, jsonify, Response, flash, Flask
 from app import DAO
 from Misc.functions import *
@@ -8,11 +9,23 @@ import os
 from wtforms.validators import InputRequired
 from datetime import datetime
 
+import time
+import atexit
+
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'kerim123'
 app.config['UPLOAD_PATH'] = 'static/media'
+
+def sensor():
+	now_time = datetime.now().date()
+	user_manager.dao.check_deadline(str(now_time))
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(sensor,'interval',minutes=60)
+sched.start()
 
 
 
@@ -25,14 +38,12 @@ user_manager = UserManager(DAO)
 @user_view.route('/', methods=['GET'])
 def home():
 
-	now_time = datetime.now()
 	g.bg = 1
+
+	sensor()
 
 	user_manager.user.set_session(session, g)
 	print(g.user)
-
-	# user_manager.dao.check_deadline(str(now_time + '00:00:00'))
-
 
 	return render_template('home.html', g=g)
 
@@ -85,6 +96,12 @@ def signup():
 	return render_template('signup.html')
 
 
+@user_view.route('/privacy', methods=['GET'])
+def privacy():
+
+	return render_template('privacy.html')
+
+
 @user_view.route('/signout/', methods=['GET'])
 @user_manager.user.login_required
 def signout():
@@ -134,8 +151,11 @@ def show_activity():
 
 	d = user_manager.get(id)
 	mybooks = user_manager.getBooksList(id)
+	myarchives = user_manager.showAllArchived()
 	myinbox = user_manager.getInboxList(user_manager.user.uid())
 	mysend = user_manager.getSendList(user_manager.user.uid())
+
+	print(myarchives)
 
 
 	if request.method == 'POST':
@@ -161,7 +181,7 @@ def show_activity():
  
 
 
-	return render_template("activity.html", user=d, books=mybooks, inboxes=myinbox, sends=mysend, g=g, book = 'kerim')
+	return render_template("activity.html", user=d, books=mybooks, archives=myarchives, inboxes=myinbox, sends=mysend, g=g, book = 'kerim')
 
 
 
@@ -215,6 +235,38 @@ def inbox_detail(inbox_id):
 	return render_template('inbox.html', myinbox=myinbox, sender_email=sender_email)
 
 
+@user_view.route('/inboxes/<int:inbox_id>', methods=['POST'])
+def inbox_detail_post(inbox_id):
+	user_manager.user.set_session(session, g)
+
+	# id = int(user_manager.user.uid())
+	myinbox = user_manager.getDocument(inbox_id)
+
+	sender_email = user_manager.get(myinbox['sender_id'])['email']
+
+	if request.method == 'POST':
+		_form = request.form.to_dict()
+
+		for key in _form:
+			print((key))
+			if key == 'increase_deadline':
+				pass
+			if key == 'change_executer':
+				pass
+			if key == 'archive_document':
+				user_manager.addArchive(myinbox['sender_id'], myinbox['receiver_id'], myinbox['title'], myinbox['description'], myinbox['filepath'], myinbox['create_at'])
+				
+
+		
+
+
+
+
+	return render_template('inbox.html', myinbox=myinbox, sender_email=sender_email)
+
+
+
+
 
 
 
@@ -243,3 +295,54 @@ def send_detail(send_id):
 
 
 	return render_template('send.html', mysends=mysends, receiver_email=receiver_email)
+
+
+@user_view.route('/send/<int:send_id>', methods=['POST'])
+def send_detail_post(send_id):
+	user_manager.user.set_session(session, g)
+
+	mysends = user_manager.getDocument(send_id)
+
+	receiver_email = user_manager.get(mysends['receiver_id'])['email']
+	
+	
+	if request.method == 'POST':
+		_form = request.form
+		deadline = str(_form['archive'])
+
+		user_manager.addArchive(mysends['sender_id'], mysends['receiver_id'], mysends['title'], mysends['description'], mysends['filepath'], mysends['create_at'])
+
+
+
+
+	return render_template('send.html', mysends=mysends, receiver_email=receiver_email)
+
+
+
+
+# archive page
+@user_view.route('/archive', methods=['GET'])
+def archive():
+	user_manager.user.set_session(session, g)
+
+	id = int(user_manager.user.uid())
+
+
+	return render_template('archive.html')
+
+
+
+
+@user_view.route('/archive/<int:id>', methods=['GET'])
+def archive_detail(id):
+	user_manager.user.set_session(session, g)
+
+	myarchives = user_manager.showOneArchived(id)
+
+	receiver_email = user_manager.get(myarchives['receiver_id'])['email']
+
+	print(receiver_email, myarchives['receiver_id'])
+
+
+
+	return render_template('archive.html', myarchives=myarchives, receiver_email=receiver_email)
